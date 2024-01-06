@@ -24,9 +24,9 @@ namespace BookShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category category) 
+        public IActionResult Create(Category category)
         {
-            if(category.Name == category.DisplayOrder.ToString()) 
+            if (category.Name == category.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("", "The Category Name cannot be the same as the Display Order");
             }
@@ -44,13 +44,13 @@ namespace BookShop.Controllers
 
         public IActionResult Edit(Guid? id)
         {
-            if(id == Guid.Empty) 
+            if (id == Guid.Empty)
             {
                 return NotFound();
             }
 
             Category? category = _db.Categories.Find(id);
-            if(category == null) 
+            if (category == null)
             {
                 return NotFound();
             }
