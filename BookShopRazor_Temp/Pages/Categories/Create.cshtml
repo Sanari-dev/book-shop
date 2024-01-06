@@ -1,4 +1,5 @@
-﻿@model Category
+﻿@page
+@model BookShopRazor_Temp.Pages.Categories.CreateModel
 
 <form method="post">
     <div class="border p-3 mt-4">
@@ -8,14 +9,14 @@
         </div>
         <div asp-validation-summary="ModelOnly" class="alert alert-dismissible alert-danger"><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
         <div class="mb-3 row p-1">
-            <label asp-for="Name" class="p-0"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+            <label asp-for="Category.Name" class="p-0"></label>
+            <input asp-for="Category.Name" class="form-control" />
+            <span asp-validation-for="Category.Name" class="text-danger"></span>
         </div>
         <div class="mb-3 row p-1">
-            <label asp-for="DisplayOrder" class="p-0"></label>
-            <input asp-for="DisplayOrder" class="form-control" />
-            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            <label asp-for="Category.DisplayOrder" class="p-0"></label>
+            <input asp-for="Category.DisplayOrder" class="form-control" />
+            <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
         </div>
         <div class="container">
             <div class="row">
@@ -23,7 +24,7 @@
                     <button type="submit" class="btn btn-primary form-control" style="width:150px">Create</button>
                 </div>
                 <div class="col-6 text-end">
-                    <a asp-controller="Category" asp-action="" class="btn btn-outline-secondary form-control" style="width:150px">Back to list</a>
+                    <a asp-page="/Categories/Index" class="btn btn-outline-secondary form-control" style="width:150px">Back to list</a>
                 </div>
             </div>
         </div>            
