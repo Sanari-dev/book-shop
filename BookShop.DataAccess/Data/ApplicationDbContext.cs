@@ -1,7 +1,7 @@
 ﻿using BookShop.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookShop.Data
+namespace BookShop.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -15,9 +15,9 @@ namespace BookShop.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = Guid.NewGuid(), Name = "Scifi" },
-                new Category { Id = Guid.NewGuid(), Name = "Action" },
-                new Category { Id = Guid.NewGuid(), Name = "History" }
+                new Category { Id = Guid.NewGuid(), Name = "Scifi", DisplayOrder = 1 },
+                new Category { Id = Guid.NewGuid(), Name = "Action", DisplayOrder = 2 },
+                new Category { Id = Guid.NewGuid(), Name = "History", DisplayOrder = 3 }
                 );
         }
     }
