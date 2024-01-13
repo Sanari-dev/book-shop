@@ -1,27 +1,32 @@
 ﻿using BookShop.DataAccess.Repository.IRepository;
 using BookShop.Models;
 using BookShop.Models.ViewModels;
+using BookShop.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.ROLE_ADMIN)]
     public class ProductController : Controller
     {
         private const string PRODUCT_PATH = @"images\product";
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductRepository _productRepo;
+        private readonly ICategoryRepository _categoryRepo;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductRepository productRepo, ICategoryRepository categoryRepo, IWebHostEnvironment webHostEnvironment)
         {
-            _unitOfWork = unitOfWork;
+            _productRepo = productRepo;
+            _categoryRepo = categoryRepo;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            List<Product> objProductList = _productRepo.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
         }
 
@@ -35,7 +40,7 @@ namespace BookShop.Areas.Admin.Controllers
 
             if (id != Guid.Empty)
             {
-                productViewModel.Product = _unitOfWork.Product.Get(p => p.Id == id);
+                productViewModel.Product = _productRepo.Get(p => p.Id == id);
             }
 
             return View(productViewModel);
@@ -75,16 +80,16 @@ namespace BookShop.Areas.Admin.Controllers
 
                 if (isCreate)
                 {
-                    _unitOfWork.Product.Add(productViewModel.Product);
+                    _productRepo.Add(productViewModel.Product);
                     infoStr = "created";
                 }
                 else
                 {
-                    _unitOfWork.Product.Update(productViewModel.Product);
+                    _productRepo.Update(productViewModel.Product);
                     infoStr = "updated";
                 }
 
-                _unitOfWork.Save();
+                _productRepo.Save();
                 TempData["success"] = $"Product {infoStr} successfully";
                 return RedirectToAction("Index");
             }
@@ -98,7 +103,7 @@ namespace BookShop.Areas.Admin.Controllers
 
         private IEnumerable<SelectListItem> CategoryList()
         {
-            return _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+            return _categoryRepo.GetAll().Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.Id.ToString(),
@@ -109,14 +114,14 @@ namespace BookShop.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            List<Product> objProductList = _productRepo.GetAll(includeProperties: "Category").ToList();
             return Json(new { data = objProductList });
         }
 
         [HttpDelete]
         public IActionResult Delete(Guid? id) 
         {
-            Product? product = _unitOfWork.Product.Get(c => c.Id == id);
+            Product? product = _productRepo.Get(c => c.Id == id);
             if (product == null)
             {
                 return Json(new { success = false, message = "Error while deleting"});
@@ -128,8 +133,8 @@ namespace BookShop.Areas.Admin.Controllers
                 System.IO.File.Delete(oldImagePath);
             }
 
-            _unitOfWork.Product.Remove(product);
-            _unitOfWork.Save();
+            _productRepo.Remove(product);
+            _productRepo.Save();
 
             return Json(new { success = true, message = "Delete successful" });
         }

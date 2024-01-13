@@ -9,5 +9,6 @@ namespace BookShop.DataAccess.Repository.IRepository
         IEnumerable<T> GetAll(string? includeProperties = null);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
+        void Save();
     }
 }

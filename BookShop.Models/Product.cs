@@ -17,19 +17,19 @@ namespace BookShop.Models
         public string Author { get; set; }
         [Required]
         [Display(Name = "List Price")]
-        [Range(1, 1000)]
+        [Range(10000, 10000000)]
         public double ListPrice { get; set; }
         [Required]
         [Display(Name = "Price for 1-50")]
-        [Range(1, 1000)]
+        [Range(10000, 10000000)]
         public double Price { get; set; }
         [Required]
         [Display(Name = "Price for 50+")]
-        [Range(1, 1000)]
+        [Range(10000, 10000000)]
         public double Price50 { get; set; }
         [Required]
         [Display(Name = "Price for 100+")]
-        [Range(1, 1000)]
+        [Range(10000, 10000000)]
         public double Price100 { get; set; }
 
         public Guid CategoryId { get; set; }

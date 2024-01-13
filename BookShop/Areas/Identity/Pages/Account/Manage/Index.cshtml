@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Name" class="form-control" aria-required="true" placeholder="" />
+                <label asp-for="Input.Name" class="form-label">Name</label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.StreetAddress" class="form-control" aria-required="true" placeholder="" />
+                <label asp-for="Input.StreetAddress" class="form-label">Street Address</label>
+                <span asp-validation-for="Input.StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.City" class="form-control" aria-required="true" placeholder="" />
+                <label asp-for="Input.City" class="form-label">City</label>
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.State" class="form-control" aria-required="true" placeholder="" />
+                <label asp-for="Input.State" class="form-label">State</label>
+                <span asp-validation-for="Input.State" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.PostalCode" class="form-control" aria-required="true" placeholder="" />
+                <label asp-for="Input.PostalCode" class="form-label">Postal Code</label>
+                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+            </div>
+            @* <div class="form-floating mb-3">
+                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                    <option disabled selected>--Select Role--</option>
+                </select>
+            </div> *@
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
