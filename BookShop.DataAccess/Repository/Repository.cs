@@ -57,5 +57,10 @@ namespace BookShop.DataAccess.Repository
         {
             dbSet.RemoveRange(entities);
         }
+
+        public void Save()
+        {
+            _db.SaveChanges();
+        }
     }
 }

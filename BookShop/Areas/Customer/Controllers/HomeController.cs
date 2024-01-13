@@ -9,23 +9,23 @@ namespace BookShop.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductRepository _productRepo;
 
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepo)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
+            _productRepo = productRepo;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            IEnumerable<Product> productList = _productRepo.GetAll(includeProperties: "Category").ToList();
             return View(productList);
         }
 
         public IActionResult Details(Guid productId)
         {
-            Product product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category");
+            Product product = _productRepo.Get(u => u.Id == productId, includeProperties: "Category");
             return View(product);
         }
 

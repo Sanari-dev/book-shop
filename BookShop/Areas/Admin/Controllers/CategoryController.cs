@@ -1,21 +1,24 @@
 ﻿using BookShop.DataAccess.Repository.IRepository;
 using BookShop.Models;
+using BookShop.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.ROLE_ADMIN)]
     public class CategoryController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public CategoryController(IUnitOfWork unitOfWork)
+        private readonly ICategoryRepository _categoryRepo;
+        public CategoryController(ICategoryRepository categoryRepo)
         {
-            _unitOfWork = unitOfWork;
+            _categoryRepo = categoryRepo;
         }
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
+            List<Category> objCategoryList = _categoryRepo.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -34,8 +37,8 @@ namespace BookShop.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(category);
-                _unitOfWork.Save();
+                _categoryRepo.Add(category);
+                _categoryRepo.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
@@ -50,7 +53,7 @@ namespace BookShop.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _unitOfWork.Category.Get(c => c.Id == id);
+            Category? category = _categoryRepo.Get(c => c.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -64,8 +67,8 @@ namespace BookShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Update(category);
-                _unitOfWork.Save();
+                _categoryRepo.Update(category);
+                _categoryRepo.Save();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
@@ -80,7 +83,7 @@ namespace BookShop.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            Category? category = _unitOfWork.Category.Get(c => c.Id == id);
+            Category? category = _categoryRepo.Get(c => c.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -92,14 +95,14 @@ namespace BookShop.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(Guid? id)
         {
-            Category? category = _unitOfWork.Category.Get(c => c.Id == id);
+            Category? category = _categoryRepo.Get(c => c.Id == id);
 
             if (id == Guid.Empty)
             {
                 return NotFound();
             }
-            _unitOfWork.Category.Remove(category);
-            _unitOfWork.Save();
+            _categoryRepo.Remove(category);
+            _categoryRepo.Save();
             TempData["success"] = "Category deleted successfully";
 
             return RedirectToAction("Index");
