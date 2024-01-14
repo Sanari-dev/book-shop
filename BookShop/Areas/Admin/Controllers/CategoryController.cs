@@ -40,7 +40,7 @@ namespace BookShop.Areas.Admin.Controllers
                 _categoryRepo.Add(category);
                 _categoryRepo.Save();
                 TempData["success"] = "Category created successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View();
@@ -70,7 +70,7 @@ namespace BookShop.Areas.Admin.Controllers
                 _categoryRepo.Update(category);
                 _categoryRepo.Save();
                 TempData["success"] = "Category updated successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View();
@@ -105,7 +105,7 @@ namespace BookShop.Areas.Admin.Controllers
             _categoryRepo.Save();
             TempData["success"] = "Category deleted successfully";
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
