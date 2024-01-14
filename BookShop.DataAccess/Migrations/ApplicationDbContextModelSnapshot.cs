@@ -22,11 +22,100 @@ namespace BookShop.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BookShop.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("BookShop.Models.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
@@ -36,6 +125,9 @@ namespace BookShop.DataAccess.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
@@ -43,21 +135,101 @@ namespace BookShop.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            Id = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9188),
                             DisplayOrder = 1,
-                            Name = "Scifi"
+                            Name = "Scifi",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9203)
                         },
                         new
                         {
-                            Id = new Guid("d91ff484-726a-423b-8cf9-d65b1980ead2"),
+                            Id = new Guid("2576b898-3c3d-487c-b8a9-e55c226371f7"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9226),
                             DisplayOrder = 2,
-                            Name = "Action"
+                            Name = "Action",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9227)
                         },
                         new
                         {
-                            Id = new Guid("700de39e-a124-4240-ae02-a551818533ae"),
+                            Id = new Guid("06a758b9-f361-46f6-80c8-b67098a89f8c"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9229),
                             DisplayOrder = 3,
-                            Name = "History"
+                            Name = "History",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9230)
+                        });
+                });
+
+            modelBuilder.Entity("BookShop.Models.Company", b =>
+                {
+                    b.Property<Guid?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("611ed532-4bf2-435e-8f83-18e6f351f051"),
+                            City = "Tech City",
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9398),
+                            Name = "Tech Solution",
+                            PhoneNumber = "6669990000",
+                            PostalCode = "12121",
+                            State = "IL",
+                            StreetAddress = "123 Tech St",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9398)
+                        },
+                        new
+                        {
+                            Id = new Guid("123ca7e3-3bf5-41bb-93ca-1129570d892a"),
+                            City = "Vid City",
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9409),
+                            Name = "Vivid Books",
+                            PhoneNumber = "7779990000",
+                            PostalCode = "66666",
+                            State = "IL",
+                            StreetAddress = "999 Vid St",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9409)
+                        },
+                        new
+                        {
+                            Id = new Guid("4230f182-824d-4520-a7ee-4d72b9549138"),
+                            City = "Lala land",
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9412),
+                            Name = "Readers Club",
+                            PhoneNumber = "1113335555",
+                            PostalCode = "99999",
+                            State = "NY",
+                            StreetAddress = "999 Main St",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9412)
                         });
                 });
 
@@ -71,8 +243,11 @@ namespace BookShop.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -102,6 +277,9 @@ namespace BookShop.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -111,9 +289,10 @@ namespace BookShop.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e99ac33f-0ee7-4f1e-b6d3-a0e06c2e7821"),
+                            Id = new Guid("8f628715-351e-485b-8ec3-e3f5e0b9ddf6"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9441),
                             Description = "<p>Humanity has colonized the solar system&mdash;Mars, the Moon, the Asteroid Belt and beyond&mdash;but the stars are still out of our reach.<br><br>Jim Holden is XO of an ice miner making runs from the rings of Saturn to the mining stations of the Belt. When he and his crew stumble upon a derelict ship, the&nbsp;<em>Scopuli</em>, they find themselves in possession of a secret they never wanted. A secret that someone is willing to kill for&mdash;and kill on a scale unfathomable to Jim and his crew. War is brewing in the system unless he can find out who left the ship and why.<br><br>Detective Miller is looking for a girl. One girl in a system of billions, but her parents have money and money talks. When the trail leads him to the&nbsp;<em>Scopuli</em>&nbsp;and rebel sympathizer Holden, he realizes that this girl may be the key to everything.<br><br>Holden and Miller must thread the needle between the Earth government, the Outer Planet revolutionaries, and secretive corporations&mdash;and the odds are against them. But out in the Belt, the rules are different, and one small ship can change the fate of the universe.</p>",
                             ISBN = "978-0-316-12908-4",
                             ImageUrl = "\\images\\product\\LeviathanWakes.jpg",
@@ -121,13 +300,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 290000.0,
                             Price100 = 260000.0,
                             Price50 = 280000.0,
-                            Title = "Leviathan Wakes"
+                            Title = "Leviathan Wakes",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9442)
                         },
                         new
                         {
-                            Id = new Guid("0cf2a92d-2568-4d0b-a42d-5b8e856a4979"),
+                            Id = new Guid("ff864553-173c-4bb9-9ae7-139f5ced374b"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9448),
                             Description = "<p>We are not alone. On Ganymede, breadbasket of the outer planets, a Martian marine watches as her platoon is slaughtered by a monstrous supersoldier. On Earth, a high-level politician struggles to prevent interplanetary war from reigniting. And on Venus, an alien protomolecule has overrun the planet, wreaking massive, mysterious changes and threatening to spread out into the solar system.<br><br>In the vast wilderness of space, James Holden and the crew of the&nbsp;<em>Rocinante</em> have been keeping the peace for the Outer Planets Alliance. When they agree to help a scientist search war-torn Ganymede for a missing child, the future of humanity rests on whether a single ship can prevent an alien invasion that may have already begun.</p>",
                             ISBN = "978-0-316-12906-0",
                             ImageUrl = "\\images\\product\\CalibansWar.jpg",
@@ -135,13 +316,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 295000.0,
                             Price100 = 265000.0,
                             Price50 = 285000.0,
-                            Title = "Caliban's War"
+                            Title = "Caliban's War",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9448)
                         },
                         new
                         {
-                            Id = new Guid("ad501bb9-7651-417c-8acb-dafd9cc4a0a1"),
+                            Id = new Guid("b38ffdfb-3af4-45dc-987f-36fde69692d3"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9462),
                             Description = "<p>Abaddon's Gate is the third book in the New York Times bestselling Expanse series.<br><br>For generations, the solar system - Mars, the Moon, the Asteroid Belt - was humanity's great frontier. Until now. The alien artefact working through its program under the clouds of Venus has emerged to build a massive structure outside the orbit of Uranus: a gate that leads into a starless dark.<br><br>Jim Holden and the crew of the Rocinante are part of a vast flotilla of scientific and military ships going out to examine the artefact. But behind the scenes, a complex plot is unfolding, with the destruction of Holden at its core. As the emissaries of the human race try to find whether the gate is an opportunity or a threat, the greatest danger is the one they brought with them.</p>",
                             ISBN = "978-0-316-12907-7",
                             ImageUrl = "\\images\\product\\AbaddonsGate.jpg",
@@ -149,13 +332,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 300000.0,
                             Price100 = 275000.0,
                             Price50 = 290000.0,
-                            Title = "Abaddon's Gate"
+                            Title = "Abaddon's Gate",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9462)
                         },
                         new
                         {
-                            Id = new Guid("62fa40c8-ff17-4893-8c09-7ece6db8900b"),
+                            Id = new Guid("cc311690-eeba-4e8e-a9ef-4f72e2f6228b"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9465),
                             Description = "<p>The gates have opened the way to thousands of habitable planets, and the land rush has begun. Settlers stream out from humanity's home planets in a vast, poorly controlled flood, landing on a new world. Among them, the Rocinante, haunted by the vast, posthuman network of the protomolecule as they investigate what destroyed the great intergalactic society that built the gates and the protomolecule.<br><br>But Holden and his crew must also contend with the growing tensions between the settlers and the company which owns the official claim to the planet. Both sides will stop at nothing to defend what's theirs, but soon a terrible disease strikes and only Holden - with help from the ghostly Detective Miller - can find the cure.</p>",
                             ISBN = "978-0-316-21762-0",
                             ImageUrl = "\\images\\product\\CibolaBurn.jpg",
@@ -163,13 +348,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 260000.0,
                             Price100 = 240000.0,
                             Price50 = 250000.0,
-                            Title = "Cibola Burn"
+                            Title = "Cibola Burn",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9466)
                         },
                         new
                         {
-                            Id = new Guid("1a6e1736-43b5-48b7-b72f-aff4e1ff5cb5"),
+                            Id = new Guid("0741e91a-a08f-42b6-aa3f-f0dd73a7f08e"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9468),
                             Description = "<p>The fifth novel in Corey's New York Times bestselling Expanse series--now being produced for television by the SyFy Channel!<br><br>A thousand worlds have opened, and the greatest land rush in human history has begun. As wave after wave of colonists leave, the power structures of the old solar system begin to buckle.<br><br>Ships are disappearing without a trace. Private armies are being secretly formed. The sole remaining protomolecule sample is stolen. Terrorist attacks previously considered impossible bring the inner planets to their knees. The sins of the past are returning to exact a terrible price.<br><br>And as a new human order is struggling to be born in blood and fire, James Holden and the crew of the Rocinante must struggle to survive and get back to the only home they have left.</p>",
                             ISBN = "978-0-316-21758-3",
                             ImageUrl = "\\images\\product\\NemesisGames.jpg",
@@ -177,13 +364,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 290000.0,
                             Price100 = 260000.0,
                             Price50 = 280000.0,
-                            Title = "Nemesis Games"
+                            Title = "Nemesis Games",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9469)
                         },
                         new
                         {
-                            Id = new Guid("aceacd8e-afbe-4535-97ae-96fabb6f7097"),
+                            Id = new Guid("6f73ed5f-a0f6-4ea7-a8c5-f40eb72224c2"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9471),
                             Description = "<p>A revolution brewing for generations has begun in fire. It will end in blood.</p>\r\n<p>The Free Navy - a violent group of Belters in black-market military ships - has crippled the Earth and begun a campaign of piracy and violence among the outer planets. The colony ships heading for the thousand new worlds on the far side of the alien ring gates are easy prey, and no single navy remains strong enough to protect them.</p>\r\n<p>James Holden and his crew know the strengths and weaknesses of this new force better than anyone. Outnumbered and outgunned, the embattled remnants of the old political powers call on the&nbsp;<em>Rocinante&nbsp;</em>for a desperate mission to reach Medina Station at the heart of the gate network.</p>\r\n<p>But the new alliances are as flawed as the old, and the struggle for power has only just begun. As the chaos grows, an alien mystery deepens. Pirate fleets, mutiny and betrayal may be the least of the&nbsp;<em>Rocinante</em>'s problems. And in the uncanny spaces past the ring gates, the choices of a few damaged and desperate people may determine the fate of more than just humanity.</p>",
                             ISBN = "978-0-316-33474-7",
                             ImageUrl = "\\images\\product\\BabylonsAshes.jpg",
@@ -191,13 +380,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 300000.0,
                             Price100 = 275000.0,
                             Price50 = 290000.0,
-                            Title = "Babylon's Ashes"
+                            Title = "Babylon's Ashes",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9472)
                         },
                         new
                         {
-                            Id = new Guid("4d0e22c5-9a93-46e6-afba-120071de35d8"),
+                            Id = new Guid("88ee0e9c-8739-49fe-947e-989aa8e3b97d"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9474),
                             Description = "<p>In the thousand-sun network of humanity's expansion, new colony worlds are struggling to find their way. Every new planet lives on a knife edge between collapse and wonder, and the crew of the aging gunship Rocinante have their hands more than full keeping the fragile peace.<br><br>In the vast space between Earth and Jupiter, the inner planets and belt have formed a tentative and uncertain alliance still haunted by a history of wars and prejudices. On the lost colony world of Laconia, a hidden enemy has a new vision for all of humanity and the power to enforce it.<br><br>New technologies clash with old as the history of human conflict returns to its ancient patterns of war and subjugation. But human nature is not the only enemy, and the forces being unleashed have their own price. A price that will change the shape of humanity -- and of the Rocinante -- unexpectedly and forever...</p>",
                             ISBN = "978-0-316-33283-5",
                             ImageUrl = "\\images\\product\\PersepolisRising.jpg",
@@ -205,13 +396,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 290000.0,
                             Price100 = 260000.0,
                             Price50 = 280000.0,
-                            Title = "Persepolis Rising	"
+                            Title = "Persepolis Rising	",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9475)
                         },
                         new
                         {
-                            Id = new Guid("53ab9566-115a-4f5d-914b-329a27fe7db6"),
+                            Id = new Guid("a16e840e-b1e3-4ddb-a5c0-45056af02a9a"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9477),
                             Description = "<p>Thirteen hundred gates have opened to solar systems around the galaxy. But as humanity builds its interstellar empire in the alien ruins, the mysteries and threats grow deeper.<br><br>In the dead systems where gates lead to stranger things than alien planets, Elvi Okoye begins a desperate search to discover the nature of a genocide that happened before the first human beings existed, and to find weapons to fight a war against forces at the edge of the imaginable. But the price of that knowledge may be higher than she can pay.<br><br>At the heart of the empire, Teresa Duarte prepares to take on the burden of her father's godlike ambition. The sociopathic scientist Paolo Cort&aacute;zar and the Mephistophelian prisoner James Holden are only two of the dangers in a palace thick with intrigue, but Teresa has a mind of her own and secrets even her father the emperor doesn't guess.<br><br>And throughout the wide human empire, the scattered crew of the Rocinante fights a brave rear-guard action against Duarte's authoritarian regime. Memory of the old order falls away, and a future under Laconia's eternal rule -- and with it, a battle that humanity can only lose - seems more and more certain. Because against the terrors that lie between worlds, courage and ambition will not be enough...</p>",
                             ISBN = "978-0-316-33286-6",
                             ImageUrl = "\\images\\product\\TiamatsWrath.jpg",
@@ -219,13 +412,15 @@ namespace BookShop.DataAccess.Migrations
                             Price = 300000.0,
                             Price100 = 275000.0,
                             Price50 = 290000.0,
-                            Title = "Tiamat's Wrath"
+                            Title = "Tiamat's Wrath",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9478)
                         },
                         new
                         {
-                            Id = new Guid("e062b10d-e68f-44fe-97e1-a45f973247e3"),
+                            Id = new Guid("ea8c9c2e-9760-4f75-80c2-aa32de00e6a1"),
                             Author = "Corey, James S. A.",
-                            CategoryId = new Guid("1a2eb1b7-902a-4bc1-929a-fccb6519abe9"),
+                            CategoryId = new Guid("61866dec-99e1-4bf5-a16d-e34dc83c29aa"),
+                            Created = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9527),
                             Description = "<p>The Laconian Empire has fallen, setting the thirteen hundred solar systems free from the rule of Winston Duarte. But the ancient enemy that killed the gate builders is awake, and the war against our universe has begun again.<br><br>In the dead system of Adro, Elvi Okoye leads a desperate scientific mission to understand what the gate builders were and what destroyed them, even if it means compromising herself and the half-alien children who bear the weight of her investigation. Through the wide-flung systems of humanity, Colonel Aliana Tanaka hunts for Duarte&rsquo;s missing daughter. . . and the shattered emperor himself. And on the Rocinante, James Holden and his crew struggle to build a future for humanity out of the shards and ruins of all that has come before.<br><br>As nearly unimaginable forces prepare to annihilate all human life, Holden and a group of unlikely allies discover a last, desperate chance to unite all of humanity, with the promise of a vast galactic civilization free from wars, factions, lies, and secrets if they win.<br><br>But the price of victory may be worse than the cost of defeat.</p>",
                             ISBN = "978-0-316-33291-0",
                             ImageUrl = "\\images\\product\\LeviathanFalls.jpg",
@@ -233,7 +428,8 @@ namespace BookShop.DataAccess.Migrations
                             Price = 320000.0,
                             Price100 = 300000.0,
                             Price50 = 310000.0,
-                            Title = "Leviathan Falls"
+                            Title = "Leviathan Falls",
+                            Updated = new DateTime(2024, 1, 14, 15, 18, 2, 887, DateTimeKind.Local).AddTicks(9528)
                         });
                 });
 
@@ -287,80 +483,6 @@ namespace BookShop.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -446,34 +568,18 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("BookShop.Models.ApplicationUser", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasOne("BookShop.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("BookShop.Models.Product", b =>
                 {
                     b.HasOne("BookShop.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
                 });
@@ -489,7 +595,7 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("BookShop.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -498,7 +604,7 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("BookShop.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -513,7 +619,7 @@ namespace BookShop.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("BookShop.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -522,7 +628,7 @@ namespace BookShop.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("BookShop.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

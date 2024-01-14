@@ -3,6 +3,7 @@
 <form method="post" enctype="multipart/form-data">
     <input asp-for="Product.Id" hidden />
     <input asp-for="Product.ImageUrl" hidden />
+    <input asp-for="Product.Created" hidden />
     <div class="border p-3 mt-4">
         <div class="row">
             <div class=@(Model.Product !=null && !string.IsNullOrEmpty(Model.Product.ImageUrl) ? "col-10" : "col-12")>

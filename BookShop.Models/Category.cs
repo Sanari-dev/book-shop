@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BookShop.Models
 {
-    public class Category
+    public class Category : BaseModel
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
         [DisplayName("Category Name")]
         [MaxLength(30)]

@@ -1,5 +1,4 @@
 ﻿using BookShop.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +14,23 @@ namespace BookShop.DataAccess.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Company> Companies { get; set; }
+
+        public override int SaveChanges()
+        {
+            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseModel && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            foreach (var entity in entities)
+            {
+                ((BaseModel)entity.Entity).Updated = DateTime.Now;
+
+                if (entity.State == EntityState.Added)
+                {
+                    ((BaseModel)entity.Entity).Created = DateTime.Now;
+                }             
+            }
+            return base.SaveChanges();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +41,39 @@ namespace BookShop.DataAccess.Data
             Category cat3 = new Category { Id = Guid.NewGuid(), Name = "History", DisplayOrder = 3 };
 
             modelBuilder.Entity<Category>().HasData(cat1, cat2, cat3);
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Tech Solution",
+                    StreetAddress = "123 Tech St",
+                    City = "Tech City",
+                    PostalCode = "12121",
+                    State = "IL",
+                    PhoneNumber = "6669990000"
+                },
+                new Company
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Vivid Books",
+                    StreetAddress = "999 Vid St",
+                    City = "Vid City",
+                    PostalCode = "66666",
+                    State = "IL",
+                    PhoneNumber = "7779990000"
+                },
+                new Company
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Readers Club",
+                    StreetAddress = "999 Main St",
+                    City = "Lala land",
+                    PostalCode = "99999",
+                    State = "NY",
+                    PhoneNumber = "1113335555"
+                }
+                );
 
             modelBuilder.Entity<Product>().HasData(
                 new Product

@@ -66,7 +66,7 @@ namespace BookShop.Areas.Admin.Controllers
         public IActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 _categoryRepo.Update(category);
                 _categoryRepo.Save();
                 TempData["success"] = "Category updated successfully";
