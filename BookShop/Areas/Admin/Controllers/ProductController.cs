@@ -32,7 +32,7 @@ namespace BookShop.Areas.Admin.Controllers
 
         public IActionResult Upsert(Guid? id)
         {
-            ProductViewModel productViewModel = new()
+            ProductViewModel productVM = new()
             {
                 CategoryList = CategoryList(),
                 Product = new Product()
@@ -43,16 +43,16 @@ namespace BookShop.Areas.Admin.Controllers
 
             if (id != Guid.Empty)
             {
-                productViewModel.Product = _productRepo.Get(p => p.Id == id);
+                productVM.Product = _productRepo.Get(p => p.Id == id);
             }
 
-            return View(productViewModel);
+            return View(productVM);
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductViewModel productViewModel, IFormFile? file)
+        public IActionResult Upsert(ProductViewModel productVM, IFormFile? file)
         {
-            bool isCreate = productViewModel.Product.Id == null;
+            bool isCreate = productVM.Product.Id == null;
 
             if (ModelState.IsValid)
             {
@@ -62,9 +62,9 @@ namespace BookShop.Areas.Admin.Controllers
                     string fileName = DateTime.Now.ToString("yyyymmddhhmmss") + Path.GetExtension(file.FileName);
                     string productPath = Path.Combine(wwwRootPath, PRODUCT_PATH);
 
-                    if (!string.IsNullOrEmpty(productViewModel.Product.ImageUrl))
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
                     {
-                        string oldImagePath = Path.Combine(wwwRootPath, productViewModel.Product.ImageUrl.TrimStart('\\'));
+                        string oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
                         if (System.IO.File.Exists(oldImagePath))
                         {
                             System.IO.File.Delete(oldImagePath);
@@ -76,31 +76,31 @@ namespace BookShop.Areas.Admin.Controllers
                         file.CopyTo(fileStream);
                     }
 
-                    productViewModel.Product.ImageUrl = @"\" + PRODUCT_PATH + @"\" + fileName;
+                    productVM.Product.ImageUrl = @"\" + PRODUCT_PATH + @"\" + fileName;
                 }
 
                 string infoStr = "";
 
                 if (isCreate)
                 {
-                    _productRepo.Add(productViewModel.Product);
+                    _productRepo.Add(productVM.Product);
                     infoStr = "created";
                 }
                 else
                 {
-                    _productRepo.Update(productViewModel.Product);
+                    _productRepo.Update(productVM.Product);
                     infoStr = "updated";
                 }
 
                 _productRepo.Save();
                 TempData["success"] = $"Product {infoStr} successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             else
             {
                 TempData["error"] = "Failed to create a Product";
-                productViewModel.CategoryList = CategoryList();
-                return View(productViewModel);
+                productVM.CategoryList = CategoryList();
+                return View(productVM);
             }
         }
 
@@ -122,12 +122,12 @@ namespace BookShop.Areas.Admin.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete(Guid? id) 
+        public IActionResult Delete(Guid? id)
         {
             Product? product = _productRepo.Get(c => c.Id == id);
             if (product == null)
             {
-                return Json(new { success = false, message = "Error while deleting"});
+                return Json(new { success = false, message = "Error while deleting" });
             }
 
             string oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\'));

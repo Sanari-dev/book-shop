@@ -59,7 +59,7 @@ namespace BookShop.Areas.Admin.Controllers
 
                 _companyRepo.Save();
                 TempData["success"] = $"Company {infoStr} successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             else
             {
