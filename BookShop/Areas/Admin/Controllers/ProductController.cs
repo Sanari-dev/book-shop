@@ -36,6 +36,9 @@ namespace BookShop.Areas.Admin.Controllers
             {
                 CategoryList = CategoryList(),
                 Product = new Product()
+                {
+                    Id = Guid.NewGuid(),
+                }
             };
 
             if (id != Guid.Empty)

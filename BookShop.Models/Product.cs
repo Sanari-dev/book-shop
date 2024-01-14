@@ -4,10 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookShop.Models
 {
-    public class Product
+    public class Product : BaseModel
     {
-        [Key]
-        public Guid? Id { get; set; }
         [Required]
         public string Title { get; set; }
         public string Description { get; set; }
@@ -32,7 +30,7 @@ namespace BookShop.Models
         [Range(10000, 10000000)]
         public double Price100 { get; set; }
 
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public Category Category { get; set; }

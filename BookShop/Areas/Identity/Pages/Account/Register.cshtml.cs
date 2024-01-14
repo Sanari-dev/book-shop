@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using BookShop.DataAccess.Repository.IRepository;
 using BookShop.Models;
 using BookShop.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -27,6 +28,7 @@ namespace BookShop.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICompanyRepository _companyRepo;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -34,7 +36,8 @@ namespace BookShop.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ICompanyRepository companyRepo)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +46,7 @@ namespace BookShop.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _companyRepo = companyRepo;
         }
 
         /// <summary>
@@ -112,6 +116,10 @@ namespace BookShop.Areas.Identity.Pages.Account
             [Phone]
             [Display(Name = "Phone number")]
             public string? PhoneNumber { get; set; }
+            [Display(Name = "Company")]
+            public Guid? CompanyId { get; set; }
+            [ValidateNever]
+            public IEnumerable<SelectListItem> CompanyList { get; set; }
         }
 
 
@@ -131,6 +139,11 @@ namespace BookShop.Areas.Identity.Pages.Account
                 {
                     Text = i,
                     Value = i
+                }),
+                CompanyList = _companyRepo.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
                 })
             };
 
@@ -154,6 +167,12 @@ namespace BookShop.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
+
+                if(Input.Role == StaticDetails.ROLE_COMPANY)
+                {
+                    user.CompanyId = Input.CompanyId;
+                }
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
